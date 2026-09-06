@@ -1,35 +1,44 @@
 ﻿using Microsoft.Playwright;
 using ReqnrollPlaywright.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using ReqnrollPlaywright.Bootstrap;
+using ReqnrollPlaywright.DiRegestry;
+using ReqnrollPlaywright.Models;
 
 namespace ReqnrollPlaywright.Hooks
 {
     [Binding]
     public class ReqnrollHooks
     {
-        public static PlaywrightContextFactory? Factory;
-
+        private static PlaywrightContextFactory? _factory;
+        public static IServiceProvider ServiceProvider { get; private set; } = null!;
+        
         [BeforeTestRun]
-        public static void BeforeTestRun()
+        public static async Task BeforeTestRun()
         {
-            Factory = new PlaywrightContextFactory();
+            ServiceProvider = ServiceCollectionExtensions.AddPlaywrightConfiguration();
+            var config = ServiceProvider.GetRequiredService<IOptions<PlaywrightConfig>>();
+            await AuthBootstrap.Run();
+            _factory = new PlaywrightContextFactory(config.Value);
+          
         }
 
         [BeforeScenario]
         public async Task BeforeScenario(ScenarioContext scenario)
         {
-            var context = await Factory!.CreateAuthenticatedContext();
+            var context = await (_factory?.CreateAuthenticatedContext()
+                ?? throw new InvalidOperationException("Factory is not initialized."));
             scenario["BrowserContext"] = context;
+            
         }
 
         [AfterScenario]
         public async Task AfterScenario(ScenarioContext scenario)
         {
+            
             var context = (IBrowserContext)scenario["BrowserContext"];
+            await _factory.StopTracing(context);
             await context.CloseAsync();
         }
     }

@@ -4,7 +4,7 @@
   So that I can view notifications and navigate the application
 
   @Smoke
-  Scenario: View notifications on the dashboard
-    Given I am on the dashboard
-    When I open the notifications panel
-    Then I should see at least one notification
+  Scenario: View cards on the dashboard
+    Given I am logged in and navigate to the home page 
+    When I have landed on the homepage 
+    Then I should see at least one card

@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
-using Reqnroll;
-using System;
+using ReqnrollPlaywright.Pages;
+using ReqnrollPlaywright.Support;
 
 namespace ReqnrollPlaywright.StepDefinitions
 {
@@ -9,28 +9,27 @@ namespace ReqnrollPlaywright.StepDefinitions
     {
         private readonly IBrowserContext _context = (IBrowserContext)scenario["BrowserContext"];
         private IPage? _page;
+        private HomePage _homePage = null!;
 
-        [Given("I am on the dashboard")]
-        public async Task GivenIAmOnTheDashboard()
+        [Given("I am logged in and navigate to the home page")]
+        public async Task GivenIAmLoggedInAndNavigateToTheHomePage()
         {
             _page = await _context.NewPageAsync();
-            await _page.GotoAsync("https://yourapp.com/dashboard");
-            await _page.WaitForSelectorAsync("data-test=dashboard-title");
+            _homePage = new HomePage(_page);
+            await _homePage.NavigateAsync();
+            await ModalHelper.HandleGlobalModals(_page);
         }
 
-        [When("I open the notifications panel")]
-        public async Task WhenIOpenTheNotificationsPanel()
+        [When("I have landed on the homepage")]
+        public async Task WhenIHaveLandedOnTheHomepage()
         {
-            await _page!.GetByTestId("notifications-button").ClickAsync();
-            await _page.WaitForSelectorAsync("data-test=notifications-panel");
+            await _homePage.WaitForSelection();
         }
 
-        [Then("I should see at least one notification")]
-        public async Task ThenIShouldSeeAtLeastOneNotification()
+        [Then("I should see at least one card")]
+        public async Task ThenIShouldSeeAtLeastOneCard()
         {
-            var count = await _page!.Locator("data-test=notification-item").CountAsync();
-            if (count < 1)
-                throw new Exception("Expected at least one notification.");
+            Assert.Equal(1, await _homePage.ReturnContentCountAsync());
         }
     }
 }

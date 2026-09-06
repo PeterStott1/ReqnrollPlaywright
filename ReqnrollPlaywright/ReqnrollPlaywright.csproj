@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="8.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.62.0" />
     <PackageReference Include="Microsoft.Playwright.Xunit" Version="1.62.0" />
@@ -21,9 +25,19 @@
 
   <ItemGroup>
     <Folder Include="Features\" />
-    <Folder Include="playwright\.auth\" />
-    <Folder Include="playwright\Support\" />
     <Folder Include="StepDefinitions\" />
+    <Folder Include="Support\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\..\.nuget\packages\microsoft.playwright\1.62.0\.playwright\.auth\state.json">
+      <Link>.playwright\.auth\state.json</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Support/playwright.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

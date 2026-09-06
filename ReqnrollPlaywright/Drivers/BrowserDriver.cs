@@ -1,9 +1,5 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReqnrollPlaywright.Models;
 
 namespace ReqnrollPlaywright.Drivers
 {
@@ -11,43 +7,62 @@ namespace ReqnrollPlaywright.Drivers
     {
         private readonly bool _headless;
         private readonly bool _enableTracing;
+        private readonly PlaywrightConfig _config;
+        private IBrowserContext? Context { get; set; }
 
-        public BrowserDriver(bool headless = true, bool enableTracing = true)
+        public BrowserDriver(PlaywrightConfig config)
         {
-            _headless = headless;
-            _enableTracing = enableTracing;
+            _config = config;
+            _headless = _config.Browser.Headless;
+            _enableTracing = _config.Tracing.Enabled;
         }
 
         public async Task<IBrowser> CreateBrowserAsync()
         {
             var pw = await Playwright.CreateAsync();
-
             return await pw.Chromium.LaunchAsync(new()
             {
-                Headless = _headless,
+                Headless = _headless, 
                 Args = new[] { "--disable-dev-shm-usage" }
             });
         }
 
-        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser, string storageStatePath)
+        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser)
         {
-            var context = await browser.NewContextAsync(new()
+            var height = _config.Context.ViewportHeight;
+            var width = _config.Context.ViewportHeight;
+         
+            if (_config.Video.Enabled)
             {
-                StorageStatePath = storageStatePath,
-                ViewportSize = new() { Width = 1920, Height = 1080 }
-            });
-
+                var contextOptions = new BrowserNewContextOptions
+                {
+                    RecordVideoDir = "videos",
+                    RecordVideoSize = new RecordVideoSize
+                    {
+                        Width = 1280,
+                        Height = 720
+                    },
+                    StorageStatePath = _config.PlaywrightSettings.AuthState,
+                    ViewportSize = new() { Width = width, Height = height }
+                };
+                Context = await browser.NewContextAsync(contextOptions);
+            }
+            else
+                Context = await browser.NewContextAsync(new()
+                {
+                    StorageStatePath = _config.PlaywrightSettings.AuthState,
+                    ViewportSize = new() { Width = width, Height = height }
+                });
             if (_enableTracing)
             {
-                await context.Tracing.StartAsync(new()
+                await Context.Tracing.StartAsync(new()
                 {
-                    Screenshots = true,
-                    Snapshots = true,
-                    Sources = true
+                    Screenshots = _config.Tracing.Screenshots,
+                    Snapshots = _config.Tracing.Snapshots,
+                    Sources = _config.Tracing.Sources
                 });
             }
-
-            return context;
+            return Context;
         }
 
         public async Task StopTracingAsync(IBrowserContext context, string scenarioName)

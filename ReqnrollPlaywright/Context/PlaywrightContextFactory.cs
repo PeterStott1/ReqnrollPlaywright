@@ -1,10 +1,7 @@
 ﻿using Microsoft.Playwright;
 using ReqnrollPlaywright.Drivers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using ReqnrollPlaywright.Models;
 
 namespace ReqnrollPlaywright.Context
 {
@@ -12,19 +9,20 @@ namespace ReqnrollPlaywright.Context
     {
         private readonly BrowserDriver _driver;
 
-        public PlaywrightContextFactory()
+        public PlaywrightContextFactory(PlaywrightConfig options)
         {
-            _driver = new BrowserDriver(headless: true, enableTracing: true);
+            _driver = new BrowserDriver(options);
         }
 
         public async Task<IBrowserContext> CreateAuthenticatedContext()
         {
             var browser = await _driver.CreateBrowserAsync();
+            return await _driver.CreateContextAsync(browser);
+        }
 
-            return await _driver.CreateContextAsync(
-                browser,
-                storageStatePath: "playwright/.auth/state.json"
-            );
+        public async Task StopTracing(IBrowserContext context)
+        {
+            await _driver.StopTracingAsync(context, "Dashboard");
         }
     }
 }

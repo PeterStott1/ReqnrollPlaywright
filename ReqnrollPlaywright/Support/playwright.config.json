@@ -1,0 +1,46 @@
+{
+  "PlaywrightSettings": 
+  {
+    "BaseUrl": "https://test.members.vitality.co.uk/",
+    "LoginEntryPointUrl": "https://test.members.vitality.co.uk/identity/login/member/Wso2IdentityServer?returnUrl=%2F",
+    "UsernameEmail": "1260643158@mailinator.com",
+    "UserPassword": "Password#12345",
+    "AuthState": "state.json"
+  },
+  "Browser": {
+    "Type": "Chromium",
+    "Headless": false,
+    "SlowMo": 200,
+    "Channel": "chrome"
+  },
+
+  "Context": {
+    "ViewportWidth": 500,
+    "ViewportHeight": 580,
+    "IgnoreHttpsErrors": true,
+    "Locale": "en-GB",
+    "TimezoneId": "Europe/London"
+  },
+
+  "Tracing": {
+    "Enabled": false,
+    "Screenshots": true,
+    "Snapshots": true,
+    "Sources": true
+  },
+
+  "Screenshots": {
+    "OnFailure": true,
+    "Directory": "Artifacts/Screenshots"
+  },
+
+  "Video": {
+    "Enabled": false,
+    "Directory": "videos"
+  },
+
+  "Timeouts": {
+    "DefaultTimeout": 30000,
+    "NavigationTimeout": 60000
+  }
+}
