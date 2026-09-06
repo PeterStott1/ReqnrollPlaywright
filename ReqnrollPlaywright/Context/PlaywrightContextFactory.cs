@@ -11,10 +11,10 @@ namespace ReqnrollPlaywright.Context
     public class PlaywrightContextFactory
     {
         private readonly BrowserDriver _driver;
-
+        private const string StorageStatePath = "state.json";
         public PlaywrightContextFactory()
         {
-            _driver = new BrowserDriver(headless: true, enableTracing: true);
+            _driver = new BrowserDriver(headless: false, enableTracing: true);
         }
 
         public async Task<IBrowserContext> CreateAuthenticatedContext()
@@ -23,7 +23,9 @@ namespace ReqnrollPlaywright.Context
 
             return await _driver.CreateContextAsync(
                 browser,
-                storageStatePath: "playwright/.auth/state.json"
+                storageStatePath : (File.Exists(StorageStatePath)
+                    ? StorageStatePath
+                    : null)!
             );
         }
     }

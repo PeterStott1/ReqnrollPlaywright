@@ -5,24 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReqnrollPlaywright.Bootstrap;
 
 namespace ReqnrollPlaywright.Hooks
 {
     [Binding]
     public class ReqnrollHooks
     {
-        public static PlaywrightContextFactory? Factory;
+        private static PlaywrightContextFactory _factory;
 
         [BeforeTestRun]
-        public static void BeforeTestRun()
+        public static async Task BeforeTestRun()
         {
-            Factory = new PlaywrightContextFactory();
+            await AuthBootstrap.Run();
+            _factory = new PlaywrightContextFactory();
         }
 
         [BeforeScenario]
         public async Task BeforeScenario(ScenarioContext scenario)
         {
-            var context = await Factory!.CreateAuthenticatedContext();
+            var context = await _factory.CreateAuthenticatedContext();
             scenario["BrowserContext"] = context;
         }
 

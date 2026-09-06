@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="8.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.62.0" />
     <PackageReference Include="Microsoft.Playwright.Xunit" Version="1.62.0" />
@@ -21,9 +22,29 @@
 
   <ItemGroup>
     <Folder Include="Features\" />
-    <Folder Include="playwright\.auth\" />
-    <Folder Include="playwright\Support\" />
     <Folder Include="StepDefinitions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\.nuget\packages\microsoft.playwright\1.62.0\.playwright\.auth\state.json">
+      <Link>.playwright\.auth\state.json</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ReqnrollFeatureFile Remove="playwright\Support\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="playwright\Support\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="playwright\Support\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="playwright\Support\**" />
   </ItemGroup>
 
 </Project>

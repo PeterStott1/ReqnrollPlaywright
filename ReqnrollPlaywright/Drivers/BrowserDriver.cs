@@ -34,7 +34,7 @@ namespace ReqnrollPlaywright.Drivers
             var context = await browser.NewContextAsync(new()
             {
                 StorageStatePath = storageStatePath,
-                ViewportSize = new() { Width = 1920, Height = 1080 }
+                ViewportSize = new() { Width = 500, Height = 500 }
             });
 
             if (_enableTracing)

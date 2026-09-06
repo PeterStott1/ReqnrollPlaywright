@@ -24,8 +24,8 @@ namespace ReqnrollPlaywright.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Dashboard", "  As an authenticated user\r\n  I want to access my dashboard\r\n  So that I can view" +
-                " notifications and navigate the application", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Dashboard", "  As an authenticated user\n  I want to access my dashboard\n  So that I can view n" +
+                "otifications and navigate the application", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -134,17 +134,17 @@ namespace ReqnrollPlaywright.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="View notifications on the dashboard")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="View cards on the dashboard")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Dashboard")]
-        [global::Xunit.TraitAttribute("Description", "View notifications on the dashboard")]
+        [global::Xunit.TraitAttribute("Description", "View cards on the dashboard")]
         [global::Xunit.TraitAttribute("Category", "Smoke")]
-        public async global::System.Threading.Tasks.Task ViewNotificationsOnTheDashboard()
+        public async global::System.Threading.Tasks.Task ViewCardsOnTheDashboard()
         {
             string[] tagsOfScenario = new string[] {
                     "Smoke"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View notifications on the dashboard", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View cards on the dashboard", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 7
@@ -158,13 +158,13 @@ namespace ReqnrollPlaywright.Features
             {
                 await this.ScenarioStartAsync();
 #line 8
-    await testRunner.GivenAsync("I am on the dashboard", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync("I am logged in and navigate to the home page", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 9
-    await testRunner.WhenAsync("I open the notifications panel", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("I have landed on the homepage", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 10
-    await testRunner.ThenAsync("I should see at least one notification", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync("I should see at least one card", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
