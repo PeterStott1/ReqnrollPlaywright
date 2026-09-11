@@ -9,6 +9,7 @@ namespace ReqnrollPlaywright.Drivers
         private readonly bool _enableTracing;
         private readonly PlaywrightConfig _config;
         private IBrowserContext? Context { get; set; }
+        private BrowserNewContextOptions? ContextOptions { get; set; }
 
         public BrowserDriver(PlaywrightConfig config)
         {
@@ -34,25 +35,27 @@ namespace ReqnrollPlaywright.Drivers
          
             if (_config.Video.Enabled)
             {
-                var contextOptions = new BrowserNewContextOptions
+                ContextOptions = new BrowserNewContextOptions
                 {
                     RecordVideoDir = "videos",
                     RecordVideoSize = new RecordVideoSize
                     {
-                        Width = 1280,
-                        Height = 720
+                        Width = width,
+                        Height = height
                     },
                     StorageStatePath = _config.PlaywrightSettings.AuthState,
                     ViewportSize = new() { Width = width, Height = height }
                 };
-                Context = await browser.NewContextAsync(contextOptions);
             }
             else
-                Context = await browser.NewContextAsync(new()
+            {
+                ContextOptions = new BrowserNewContextOptions
                 {
                     StorageStatePath = _config.PlaywrightSettings.AuthState,
                     ViewportSize = new() { Width = width, Height = height }
-                });
+                };
+            }
+            Context = await browser.NewContextAsync(ContextOptions);
             if (_enableTracing)
             {
                 await Context.Tracing.StartAsync(new()
