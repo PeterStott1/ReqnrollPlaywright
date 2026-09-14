@@ -10,11 +10,14 @@ namespace ReqnrollPlaywright.DiRegestry
         public static IServiceProvider AddPlaywrightConfiguration()
         {
             var services = new ServiceCollection();
+            var environment =
+            Environment.GetEnvironmentVariable("TEST_ENV") ?? "Development";
+            
             var playwrightConfig = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory, "Support"))
-                .AddJsonFile("playwright.config.json", optional: false)
+                .AddJsonFile($"playwright.config.{environment}.json", false)
                 .Build();
-
+            
             services.AddSingleton<IConfiguration>(playwrightConfig);
             services.Configure<PlaywrightConfig>(playwrightConfig);
        
