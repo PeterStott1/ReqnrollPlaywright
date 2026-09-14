@@ -27,8 +27,7 @@ namespace ReqnrollPlaywright.Hooks
         [BeforeScenario]
         public async Task BeforeScenario(ScenarioContext scenario)
         {
-            var role = GetRole(scenario);
-            var context = await (_factory?.CreateAuthenticatedContext(role.ToString())
+            var context = await (_factory?.CreateAuthenticatedContext(GetRole(scenario))
                 ?? throw new InvalidOperationException("Factory is not initialized."));
             scenario["BrowserContext"] = context;
             

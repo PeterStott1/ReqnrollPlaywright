@@ -28,18 +28,16 @@ namespace ReqnrollPlaywright.Drivers
             });
         }
 
-        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser, string role)
+        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser, UserRole role)
         {
             var height = _config.Context.ViewportHeight;
             var width = _config.Context.ViewportHeight;
          
             string storageState = role switch
             {
-                "Odh" => "odh-state.json",
-                "User" => "state.json",
-                _ => throw new ArgumentException(
-                "User role cannot be empty.",
-                "role"); // "name" is not a parameter of this method
+                UserRole.Odh => "odh-state.json",
+                UserRole.User => "state.json",
+                _ => throw new ArgumentOutOfRangeException(nameof(role), role, "Unknown role")
             };
             if (_config.Video.Enabled)
             {

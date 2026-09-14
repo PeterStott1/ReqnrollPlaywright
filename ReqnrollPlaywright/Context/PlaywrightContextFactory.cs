@@ -14,7 +14,7 @@ namespace ReqnrollPlaywright.Context
             _driver = new BrowserDriver(options);
         }
 
-        public async Task<IBrowserContext> CreateAuthenticatedContext(string role)
+        public async Task<IBrowserContext> CreateAuthenticatedContext(UserRole role)
         {
             var browser = await _driver.CreateBrowserAsync();
             return await _driver.CreateContextAsync(browser, role);
