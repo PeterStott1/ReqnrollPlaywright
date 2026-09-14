@@ -106,7 +106,7 @@ namespace ReqnrollPlaywright.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Dashboard.feature.ndjson", 3);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Dashboard.feature.ndjson", 4);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -137,11 +137,11 @@ namespace ReqnrollPlaywright.Features
         [global::Xunit.SkippableFactAttribute(DisplayName="View cards on the dashboard")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Dashboard")]
         [global::Xunit.TraitAttribute("Description", "View cards on the dashboard")]
-        [global::Xunit.TraitAttribute("Category", "Smoke")]
+        [global::Xunit.TraitAttribute("Category", "User")]
         public async global::System.Threading.Tasks.Task ViewCardsOnTheDashboard()
         {
             string[] tagsOfScenario = new string[] {
-                    "Smoke"};
+                    "User"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View cards on the dashboard", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
@@ -164,6 +164,42 @@ namespace ReqnrollPlaywright.Features
     await testRunner.WhenAsync("I have landed on the homepage", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 10
+    await testRunner.ThenAsync("I should see at least one card", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="View Odh cards on the dashboard")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Dashboard")]
+        [global::Xunit.TraitAttribute("Description", "View Odh cards on the dashboard")]
+        [global::Xunit.TraitAttribute("Category", "Odh")]
+        public async global::System.Threading.Tasks.Task ViewOdhCardsOnTheDashboard()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Odh"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "1";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View Odh cards on the dashboard", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 13
+  this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 14
+    await testRunner.GivenAsync("I am logged in and navigate to the home page", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 15
+    await testRunner.WhenAsync("I have landed on the homepage", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 16
     await testRunner.ThenAsync("I should see at least one card", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

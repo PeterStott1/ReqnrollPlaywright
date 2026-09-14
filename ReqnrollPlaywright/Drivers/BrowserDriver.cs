@@ -28,11 +28,19 @@ namespace ReqnrollPlaywright.Drivers
             });
         }
 
-        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser)
+        public async Task<IBrowserContext> CreateContextAsync(IBrowser browser, string role)
         {
             var height = _config.Context.ViewportHeight;
             var width = _config.Context.ViewportHeight;
          
+            string storageState = role switch
+            {
+                "Odh" => "odh-state.json",
+                "User" => "state.json",
+                _ => throw new ArgumentException(
+                "User role cannot be empty.",
+                "role"); // "name" is not a parameter of this method
+            };
             if (_config.Video.Enabled)
             {
                 ContextOptions = new BrowserNewContextOptions
@@ -43,7 +51,7 @@ namespace ReqnrollPlaywright.Drivers
                         Width = width,
                         Height = height
                     },
-                    StorageStatePath = _config.PlaywrightSettings.AuthState,
+                    StorageStatePath = storageState,
                     ViewportSize = new() { Width = width, Height = height }
                 };
             }
@@ -51,7 +59,7 @@ namespace ReqnrollPlaywright.Drivers
             {
                 ContextOptions = new BrowserNewContextOptions
                 {
-                    StorageStatePath = _config.PlaywrightSettings.AuthState,
+                    StorageStatePath = storageState,
                     ViewportSize = new() { Width = width, Height = height }
                 };
             }

@@ -5,6 +5,9 @@
     "LoginEntryPointUrl": "https://test.members.vitality.co.uk/identity/login/member/Wso2IdentityServer?returnUrl=%2F",
     "UsernameEmail": "1260643158@mailinator.com",
     "UserPassword": "Password#12345",
+    "OdhUserEmail": "1261010217@mailinator.com",
+    "OdhPassword": "Password#12345",
+    "OdhAuthState": "odh-state.json",
     "AuthState": "state.json"
   },
   "Browser": {
@@ -35,7 +38,7 @@
   },
 
   "Video": {
-    "Enabled": false,
+    "Enabled": true,
     "Directory": "videos"
   },
 

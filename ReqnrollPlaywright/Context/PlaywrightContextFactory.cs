@@ -14,10 +14,10 @@ namespace ReqnrollPlaywright.Context
             _driver = new BrowserDriver(options);
         }
 
-        public async Task<IBrowserContext> CreateAuthenticatedContext()
+        public async Task<IBrowserContext> CreateAuthenticatedContext(string role)
         {
             var browser = await _driver.CreateBrowserAsync();
-            return await _driver.CreateContextAsync(browser);
+            return await _driver.CreateContextAsync(browser, role);
         }
 
         public async Task StopTracing(IBrowserContext context)

@@ -27,7 +27,8 @@ namespace ReqnrollPlaywright.Hooks
         [BeforeScenario]
         public async Task BeforeScenario(ScenarioContext scenario)
         {
-            var context = await (_factory?.CreateAuthenticatedContext()
+            var role = GetRole(scenario);
+            var context = await (_factory?.CreateAuthenticatedContext(role.ToString())
                 ?? throw new InvalidOperationException("Factory is not initialized."));
             scenario["BrowserContext"] = context;
             
@@ -36,10 +37,20 @@ namespace ReqnrollPlaywright.Hooks
         [AfterScenario]
         public async Task AfterScenario(ScenarioContext scenario)
         {
-            
             var context = (IBrowserContext)scenario["BrowserContext"];
-            await _factory.StopTracing(context);
+            await _factory?.StopTracing(context)!;
             await context.CloseAsync();
         }
+
+        private static UserRole GetRole(ScenarioContext scenario)
+        {
+            var tags = scenario.ScenarioInfo.Tags;
+
+            if (tags.Contains("Odh"))
+                return UserRole.Odh;
+
+            return UserRole.User;
+        }
+
     }
 }
