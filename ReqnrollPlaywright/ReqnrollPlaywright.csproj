@@ -31,12 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\.nuget\packages\microsoft.playwright\1.62.0\.playwright\.auth\state.json">
-      <Link>.playwright\.auth\state.json</Link>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Support\playwright.config.dev.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
