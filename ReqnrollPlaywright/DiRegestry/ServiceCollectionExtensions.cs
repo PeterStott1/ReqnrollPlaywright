@@ -20,7 +20,7 @@ namespace ReqnrollPlaywright.DiRegestry
         {
             var services = new ServiceCollection();
             var environment =
-            Environment.GetEnvironmentVariable("TEST_ENV") ?? "Development";
+            Environment.GetEnvironmentVariable("TEST_ENV") ?? "dev";
             
             var playwrightConfig = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory, "Support"))
