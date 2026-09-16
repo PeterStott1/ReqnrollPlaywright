@@ -1,6 +1,5 @@
 ﻿using Microsoft.Playwright;
 using ReqnrollPlaywright.Drivers;
-using Microsoft.Extensions.Options;
 using ReqnrollPlaywright.Models;
 
 namespace ReqnrollPlaywright.Context
